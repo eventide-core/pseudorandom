@@ -8,6 +8,14 @@ module Pseudorandom
       def self.other_example
         'some-other-namespace'
       end
+
+      module Hash
+        def self.example(namespace=nil)
+          namespace ||= Namespace.example
+
+          Pseudorandom::Iterator.namespace_hash(namespace)
+        end
+      end
     end
   end
 end

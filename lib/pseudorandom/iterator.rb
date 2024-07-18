@@ -1,25 +1,62 @@
 module Pseudorandom
   class Iterator
-    def sequence
-      @sequence ||= 0
-    end
-    attr_writer :sequence
+    attr_accessor :seed
+    attr_accessor :namespace
 
-    def namespace
-      @namespace ||= Defaults.namespace
-    end
-    attr_writer :namespace
+    attr_reader :random
 
-    def reset?(namespace=nil)
-      if not sequence.zero?
-        return false
+    def initialize(random)
+      @random = random
+    end
+
+    def self.build(seed=nil, namespace: nil)
+      seed ||= Defaults.seed
+
+      random = self.random(seed, namespace)
+
+      instance = new(random)
+      instance.seed = seed
+      instance.namespace = namespace
+      instance
+    end
+
+    def self.random(seed, namespace)
+      random_seed = seed.to_i(36)
+
+      if not namespace.nil?
+        namespace_hash = namespace_hash(namespace)
+        random_seed ^= namespace_hash
       end
 
-      if namespace.nil?
-        true
-      else
-        namespace == self.namespace
-      end
+      ::Random.new(random_seed)
+    end
+
+    def self.namespace_hash(namespace)
+      namespace_digest = Digest::Hash.digest(namespace)
+
+      namespace_digest.unpack1('Q>')
+    end
+
+    def next
+      random.bytes(8)
+    end
+
+    def next_decimal
+      self.next.unpack1('D')
+    end
+
+    def next_integer
+      self.next.unpack1('Q>')
+    end
+
+    def source?(seed, namespace=nil)
+      control_random = ::Random.new(random.seed)
+      compare_random = Iterator.random(seed, namespace)
+
+      control_value = control_random.rand
+      compare_value = compare_random.rand
+
+      control_value == compare_value
     end
   end
 end
