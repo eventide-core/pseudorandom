@@ -12,4 +12,6 @@ Gem::Specification.new do |s|
 
   s.require_paths = %w(lib)
   s.files = Dir.glob 'lib/**/*'
+
+  s.add_runtime_dependency 'digest-hash'
 end
