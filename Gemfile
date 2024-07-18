@@ -1,10 +1,6 @@
-source 'https://rubygems.org'
+source ENV.fetch('EVENTIDE_CORE_RUBYGEMS_AUTHORITY')
 
 gemspec
-
-source 'http://localhost:8080' do
-  gem 'digest-hash'
-end
 
 group :development do
   gem 'test_bench'
