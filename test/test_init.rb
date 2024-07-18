@@ -8,3 +8,6 @@ puts RUBY_DESCRIPTION
 require_relative '../init'
 
 require 'test_bench'; TestBench.activate
+
+require 'pseudorandom/controls'
+include Pseudorandom
