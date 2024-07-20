@@ -7,12 +7,12 @@ context "Iterator" do
 
     iterator = Iterator.build(seed, namespace:)
 
-    context "Iterator's Source" do
-      random_source = iterator.source?(seed, namespace)
+    test "Seed" do
+      assert(iterator.seed?(seed))
+    end
 
-      test "Is the given seed and namespace" do
-        assert(random_source)
-      end
+    test "Namespace" do
+      assert(iterator.namespace?(namespace))
     end
   end
 end

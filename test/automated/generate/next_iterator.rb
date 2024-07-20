@@ -7,20 +7,28 @@ context "Generate" do
     previous_iterator = generate.iterator
     previous_seed = previous_iterator.seed
 
+    context "Optional Namespace Omitted" do
+      iterator = generate.next_iterator
+
+      context "Iterator" do
+        test "Previous iterator's seed" do
+          assert(iterator.seed?(previous_seed))
+        end
+      end
+    end
+
     context "Optional Namespace Given" do
       namespace = Controls::Namespace.example
       iterator = generate.next_iterator(namespace)
 
-      test "Sourced from previous iterator's seed and the given namespace" do
-        assert(iterator.source?(previous_seed, namespace))
-      end
-    end
+      context "Iterator" do
+        test "Namespace" do
+          assert(iterator.namespace?(namespace))
+        end
 
-    context "Optional Namespace Omitted" do
-      iterator = generate.next_iterator
-
-      test "Sourced from previous iterator's seed" do
-        assert(iterator.source?(previous_seed))
+        test "Previous iterator's seed" do
+          assert(iterator.seed?(previous_seed))
+        end
       end
     end
   end

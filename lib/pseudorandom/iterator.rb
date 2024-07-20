@@ -49,7 +49,11 @@ module Pseudorandom
     end
 
     def namespace?(namespace)
-      source?(seed, namespace)
+      source?(self.seed, namespace)
+    end
+
+    def seed?(seed)
+      source?(seed, self.namespace)
     end
 
     def iterated?
