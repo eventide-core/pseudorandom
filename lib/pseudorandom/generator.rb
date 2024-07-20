@@ -1,18 +1,27 @@
 module Pseudorandom
   class Generator
     attr_accessor :seed
+    attr_accessor :namespace
 
     def iterator
       @iterator ||= next_iterator
     end
     attr_writer :iterator
 
-    def self.build(seed=nil)
+    def self.build(seed=nil, namespace: nil)
       seed ||= Defaults.seed
 
       instance = new
       instance.seed = seed
+      instance.namespace = namespace
       instance
+    end
+
+    def self.configure(receiver, seed=nil, namespace: nil, attr_reader: nil)
+      attr_reader ||= :random_generator
+
+      instance = build(seed, namespace:)
+      receiver.public_send(:"#{attr_reader}=", instance)
     end
 
     def string
@@ -45,7 +54,17 @@ module Pseudorandom
       end
     end
 
+    def seed?(seed)
+      iterator.seed?(seed)
+    end
+
+    def namespace?(namespace)
+      iterator.namespace?(namespace)
+    end
+
     def next_iterator(namespace=nil)
+      namespace ||= self.namespace
+
       Iterator.build(seed, namespace:)
     end
   end
