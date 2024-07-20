@@ -1,14 +1,14 @@
 require_relative '../automated_init'
 
-context "Generate" do
+context "Generator" do
   context "Next Iterator" do
-    generate = Generate.new
+    generator = Generator.new
 
-    previous_iterator = generate.iterator
+    previous_iterator = generator.iterator
     previous_seed = previous_iterator.seed
 
     context "Optional Namespace Omitted" do
-      iterator = generate.next_iterator
+      iterator = generator.next_iterator
 
       context "Iterator" do
         test "Previous iterator's seed" do
@@ -19,7 +19,7 @@ context "Generate" do
 
     context "Optional Namespace Given" do
       namespace = Controls::Namespace.example
-      iterator = generate.next_iterator(namespace)
+      iterator = generator.next_iterator(namespace)
 
       context "Iterator" do
         test "Namespace" do

@@ -1,5 +1,5 @@
 module Pseudorandom
-  class Generate
+  class Generator
     attr_accessor :seed
 
     def iterator
