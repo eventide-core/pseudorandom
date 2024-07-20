@@ -41,7 +41,9 @@ module Pseudorandom
     end
 
     def reset(namespace=nil)
-      self.namespace = namespace
+      if not namespace.nil?
+        self.namespace = namespace
+      end
 
       self.iterator = nil
     end

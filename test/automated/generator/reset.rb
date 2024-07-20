@@ -5,6 +5,9 @@ context "Generator" do
     context "Optional Namespace Omitted" do
       generator = Generator.new
 
+      control_namespace = Controls::Namespace.example
+      generator.namespace = control_namespace
+
       generator.iterator.next
       refute(generator.reset?)
 
@@ -12,6 +15,14 @@ context "Generator" do
 
       test "Generator is reset" do
         assert(generator.reset?)
+      end
+
+      context "Generator's Namespace" do
+        namespace = generator.namespace
+
+        test "Unchanged" do
+          assert(namespace == control_namespace)
+        end
       end
     end
 
