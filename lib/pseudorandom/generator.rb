@@ -4,7 +4,7 @@ module Pseudorandom
     attr_accessor :namespace
 
     def iterator
-      @iterator ||= next_iterator
+      @iterator ||= Iterator.build(seed, namespace:)
     end
     attr_writer :iterator
 
@@ -41,7 +41,9 @@ module Pseudorandom
     end
 
     def reset(namespace=nil)
-      self.iterator = next_iterator(namespace)
+      self.namespace = namespace
+
+      self.iterator = nil
     end
 
     def reset?(namespace=nil)
@@ -60,12 +62,6 @@ module Pseudorandom
 
     def namespace?(namespace)
       iterator.namespace?(namespace)
-    end
-
-    def next_iterator(namespace=nil)
-      namespace ||= self.namespace
-
-      Iterator.build(seed, namespace:)
     end
   end
 end
