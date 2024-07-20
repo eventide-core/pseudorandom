@@ -39,6 +39,28 @@ module Pseudorandom
           end
         end
       end
+
+      module String
+        def self.example(count=nil, random_seed: nil)
+          integer_sequence = Sequence::Integer.example(count, random_seed:)
+
+          integer_sequence.map do |integer|
+            integer.to_s(36)
+          end
+        end
+      end
+
+      module Boolean
+        def self.example(count=nil, random_seed: nil)
+          count ||= 10
+
+          integer_sequence = Sequence::Integer.example(count, random_seed:)
+
+          integer_sequence.map do |integer|
+            integer % 2 == 1
+          end
+        end
+      end
     end
   end
 end

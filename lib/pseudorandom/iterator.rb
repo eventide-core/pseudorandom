@@ -48,14 +48,6 @@ module Pseudorandom
       random.bytes(8)
     end
 
-    def next_decimal
-      self.next.unpack1('D')
-    end
-
-    def next_integer
-      self.next.unpack1('Q>')
-    end
-
     def namespace?(namespace)
       source?(seed, namespace)
     end
