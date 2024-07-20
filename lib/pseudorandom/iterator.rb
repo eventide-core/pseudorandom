@@ -56,6 +56,10 @@ module Pseudorandom
       self.next.unpack1('Q>')
     end
 
+    def namespace?(namespace)
+      source?(seed, namespace)
+    end
+
     def iterated?
       iterations > 0
     end
