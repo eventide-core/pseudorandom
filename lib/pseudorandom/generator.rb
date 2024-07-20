@@ -17,11 +17,11 @@ module Pseudorandom
       instance
     end
 
-    def self.configure(receiver, seed=nil, namespace: nil, attr_reader: nil)
-      attr_reader ||= :random_generator
+    def self.configure(receiver, seed=nil, namespace: nil, attr_name: nil)
+      attr_name ||= :random_generator
 
       instance = build(seed, namespace:)
-      receiver.public_send(:"#{attr_reader}=", instance)
+      receiver.public_send(:"#{attr_name}=", instance)
     end
 
     def string
