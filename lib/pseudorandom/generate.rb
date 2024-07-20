@@ -1,9 +1,15 @@
 module Pseudorandom
   class Generate
+    attr_accessor :seed
+
     def iterator
-      @iterator ||= Iterator.build
+      @iterator ||= next_iterator
     end
     attr_writer :iterator
+
+    def reset(namespace=nil)
+      self.iterator = next_iterator(namespace)
+    end
 
     def reset?(namespace=nil)
       if iterator.iterated?
@@ -13,6 +19,10 @@ module Pseudorandom
       else
         iterator.namespace?(namespace)
       end
+    end
+
+    def next_iterator(namespace=nil)
+      Iterator.build(seed, namespace:)
     end
   end
 end
