@@ -56,6 +56,10 @@ module Pseudorandom
       self.next.unpack1('Q>')
     end
 
+    def iterated?
+      iterations > 0
+    end
+
     def source?(seed, namespace=nil)
       control_random = ::Random.new(random.seed)
       compare_random = Iterator.random(seed, namespace)
