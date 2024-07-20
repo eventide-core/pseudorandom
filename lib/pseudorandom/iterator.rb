@@ -3,6 +3,11 @@ module Pseudorandom
     attr_accessor :seed
     attr_accessor :namespace
 
+    def iterations
+      @iterations ||= 0
+    end
+    attr_writer :iterations
+
     attr_reader :random
 
     def initialize(random)
@@ -38,6 +43,8 @@ module Pseudorandom
     end
 
     def next
+      self.iterations += 1
+
       random.bytes(8)
     end
 
