@@ -7,15 +7,15 @@ context "Generator" do
 
     control_sequence = Controls::Sequence::Boolean.example
 
-    control_sequence.each.with_index(1) do |control_value, iteration|
+    control_sequence.each.with_index(1) do |control_boolean, iteration|
       context "Iteration ##{iteration}" do
-        value = generator.boolean
+        boolean = generator.boolean
 
-        comment "#{value}"
-        detail "Control: #{control_value}"
+        comment "#{boolean}"
+        detail "Control: #{control_boolean}"
 
         test do
-          assert(value == control_value)
+          assert(boolean == control_boolean)
         end
       end
     end

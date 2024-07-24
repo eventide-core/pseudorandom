@@ -7,15 +7,15 @@ context "Generator" do
 
     control_sequence = Controls::Sequence::Integer.example
 
-    control_sequence.each.with_index(1) do |control_value, iteration|
+    control_sequence.each.with_index(1) do |control_integer, iteration|
       context "Iteration ##{iteration}" do
-        value = generator.integer
+        integer = generator.integer
 
-        comment "#{value}"
-        detail "Control: #{control_value}"
+        comment "#{integer}"
+        detail "Control: #{control_integer}"
 
         test do
-          assert(value == control_value)
+          assert(integer == control_integer)
         end
       end
     end

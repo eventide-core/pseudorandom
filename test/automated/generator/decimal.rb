@@ -7,15 +7,15 @@ context "Generator" do
 
     control_sequence = Controls::Sequence::Decimal.example
 
-    control_sequence.each.with_index(1) do |control_value, iteration|
+    control_sequence.each.with_index(1) do |control_decimal, iteration|
       context "Iteration ##{iteration}" do
-        value = generator.decimal
+        decimal = generator.decimal
 
-        comment("%0.16E" % value)
-        detail("Control: %0.16E" % control_value)
+        comment("%0.16E" % decimal)
+        detail("Control: %0.16E" % control_decimal)
 
         test do
-          assert(value == control_value)
+          assert(decimal == control_decimal)
         end
       end
     end
