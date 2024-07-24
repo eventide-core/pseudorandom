@@ -17,10 +17,14 @@ module Pseudorandom
       new(seed)
     end
 
-    def self.configure(receiver, seed=nil, attr_name: nil)
+    def self.instance
+      @instance ||= build
+    end
+
+    def self.configure(receiver, attr_name: nil)
       attr_name ||= :random_generator
 
-      instance = build(seed)
+      instance = build
       receiver.public_send(:"#{attr_name}=", instance)
     end
 
