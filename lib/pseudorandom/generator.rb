@@ -54,10 +54,6 @@ module Pseudorandom
       end
     end
 
-    def seed?(seed)
-      iterator.seed?(seed)
-    end
-
     def namespace?(namespace)
       iterator.namespace?(namespace)
     end
