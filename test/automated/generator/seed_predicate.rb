@@ -2,13 +2,12 @@ require_relative '../automated_init'
 
 context "Generator" do
   context "Seed Predicate" do
-    seed = Controls::Seed.example
+    control_seed = Controls::Seed.example
 
-    context "Given Seed Corresponds With Iterator's Seed" do
-      iterator = Iterator.build(seed)
+    context "Given Seed Corresponds With Generator's Seed" do
+      seed = control_seed
 
-      generator = Generator.new
-      generator.iterator = iterator
+      generator = Generator.new(control_seed)
 
       is_seed = generator.seed?(seed)
 
@@ -17,12 +16,10 @@ context "Generator" do
       end
     end
 
-    context "Given Seed Doesn't Correspond With Iterator's Seed" do
-      other_seed = Controls::Seed.other_example
-      iterator = Iterator.build(other_seed)
+    context "Given Seed Doesn't Correspond With Generator's Seed" do
+      seed = Controls::Seed.other_example
 
-      generator = Generator.new
-      generator.iterator = iterator
+      generator = Generator.new(control_seed)
 
       is_seed = generator.seed?(seed)
 

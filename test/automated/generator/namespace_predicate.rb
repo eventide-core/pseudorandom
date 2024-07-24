@@ -2,13 +2,15 @@ require_relative '../automated_init'
 
 context "Generator" do
   context "Namespace Predicate" do
-    namespace = Controls::Namespace.example
+    control_namespace = Controls::Namespace.example
 
-    context "Given Namespace Corresponds With Iterator's Namespace" do
-      iterator = Iterator.build(namespace:)
+    control_seed = Controls::Seed.example
 
-      generator = Generator.new
-      generator.iterator = iterator
+    context "Given Namespace Corresponds With Generator's Namespace" do
+      namespace = control_namespace
+
+      generator = Generator.new(control_seed)
+      generator.reset(control_namespace)
 
       is_namespace = generator.namespace?(namespace)
 
@@ -17,12 +19,11 @@ context "Generator" do
       end
     end
 
-    context "Given Namespace Doesn't Correspond With Iterator's Namespace" do
-      other_namespace = Controls::Namespace.other_example
-      iterator = Iterator.build(namespace: other_namespace)
+    context "Given Namespace Doesn't Correspond With Generator's Namespace" do
+      namespace = Controls::Namespace.other_example
 
-      generator = Generator.new
-      generator.iterator = iterator
+      generator = Generator.new(control_seed)
+      generator.reset(control_namespace)
 
       is_namespace = generator.namespace?(namespace)
 

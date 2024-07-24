@@ -2,10 +2,14 @@ require_relative '../automated_init'
 
 context "Iterator" do
   context "Namespace Predicate" do
-    namespace = Controls::Namespace.example
+    control_namespace = Controls::Namespace.example
+
+    control_seed = Controls::Seed.example
 
     context "Given Namespace Corresponds With Iterator's Namespace" do
-      iterator = Iterator.build(namespace:)
+      namespace = control_namespace
+
+      iterator = Iterator.build(control_seed, control_namespace)
 
       is_namespace = iterator.namespace?(namespace)
 
@@ -16,9 +20,9 @@ context "Iterator" do
 
     context "Given Namespace Doesn't Correspond With Iterator's Namespace" do
       context "Iterator Has a Different Namespace" do
-        other_namespace = Controls::Namespace.other_example
+        namespace = Controls::Namespace.other_example
 
-        iterator = Iterator.build(namespace: other_namespace)
+        iterator = Iterator.build(control_seed, control_namespace)
 
         is_namespace = iterator.namespace?(namespace)
 
@@ -28,9 +32,9 @@ context "Iterator" do
       end
 
       context "Iterator Doesn't Have a Namespace" do
-        iterator = Iterator.build
+        iterator = Iterator.build(control_seed)
 
-        is_namespace = iterator.namespace?(namespace)
+        is_namespace = iterator.namespace?(control_namespace)
 
         test do
           refute(is_namespace)

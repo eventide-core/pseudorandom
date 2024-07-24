@@ -3,14 +3,16 @@ require_relative '../../automated_init'
 context "Generator" do
   context "Reset Predicate" do
     context "Optional Namespace Given" do
-      namespace = Controls::Namespace.example
+      control_namespace = Controls::Namespace.example
+
+      control_seed = Controls::Seed.example
 
       context "Is Reset" do
         context "Namespace Corresponds With Iterator's Namespace" do
-          iterator = Iterator.build(namespace:)
+          namespace = control_namespace
 
-          generator = Generator.new
-          generator.iterator = iterator
+          generator = Generator.new(control_seed)
+          generator.reset(control_namespace)
 
           is_reset = generator.reset?(namespace)
 
@@ -22,14 +24,12 @@ context "Generator" do
 
       context "Isn't Reset" do
         context "Namespace Doesn't Correspond With Iterator's Namespace" do
-          other_namespace = Controls::Namespace.other_example
+          namespace = Controls::Namespace.other_example
 
-          iterator = Iterator.build(namespace:)
+          generator = Generator.new(control_seed)
+          generator.reset(control_namespace)
 
-          generator = Generator.new
-          generator.iterator = iterator
-
-          is_reset = generator.reset?(other_namespace)
+          is_reset = generator.reset?(namespace)
 
           test do
             refute(is_reset)
@@ -37,12 +37,9 @@ context "Generator" do
         end
 
         context "Iterator Doesn't Have a Namespace" do
-          iterator = Iterator.build
+          generator = Generator.new(control_seed)
 
-          generator = Generator.new
-          generator.iterator = iterator
-
-          is_reset = generator.reset?(namespace)
+          is_reset = generator.reset?(control_namespace)
 
           test do
             refute(is_reset)

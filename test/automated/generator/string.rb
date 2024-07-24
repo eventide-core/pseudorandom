@@ -2,8 +2,8 @@ require_relative '../automated_init'
 
 context "Generator" do
   context "String" do
-    seed = Controls::Seed.example
-    generator = Generator.build(seed)
+    control_seed = Controls::Seed.example
+    generator = Generator.new(control_seed)
 
     control_sequence = Controls::Sequence::String.example
 

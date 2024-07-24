@@ -1,26 +1,26 @@
 module Pseudorandom
   class Generator
-    attr_accessor :seed
-    attr_accessor :namespace
-
     def iterator
-      @iterator ||= Iterator.build(seed, namespace:)
+      @iterator ||= Iterator.build(seed)
     end
     attr_writer :iterator
 
-    def self.build(seed=nil, namespace: nil)
-      seed ||= Defaults.seed
+    attr_reader :seed
 
-      instance = new
-      instance.seed = seed
-      instance.namespace = namespace
-      instance
+    def initialize(seed)
+      @seed = seed
     end
 
-    def self.configure(receiver, seed=nil, namespace: nil, attr_name: nil)
+    def self.build(seed=nil)
+      seed ||= Defaults.seed
+
+      new(seed)
+    end
+
+    def self.configure(receiver, seed=nil, attr_name: nil)
       attr_name ||= :random_generator
 
-      instance = build(seed, namespace:)
+      instance = build(seed)
       receiver.public_send(:"#{attr_name}=", instance)
     end
 
@@ -41,11 +41,7 @@ module Pseudorandom
     end
 
     def reset(namespace=nil)
-      if not namespace.nil?
-        self.namespace = namespace
-      end
-
-      self.iterator = nil
+      self.iterator = Iterator.build(seed, namespace)
     end
 
     def reset?(namespace=nil)

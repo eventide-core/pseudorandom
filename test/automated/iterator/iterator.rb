@@ -1,8 +1,8 @@
 require_relative '../automated_init'
 
 context "Iterator" do
-  seed = Controls::Seed.example
-  iterator = Iterator.build(seed)
+  control_seed = Controls::Seed.example
+  iterator = Iterator.build(control_seed)
 
   control_sequence = Controls::Sequence.example
 

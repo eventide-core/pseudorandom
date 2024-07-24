@@ -2,14 +2,16 @@ require_relative '../automated_init'
 
 context "Generator" do
   context "Reset" do
+    control_seed = Controls::Seed.example
+
     context "Optional Namespace Omitted" do
-      generator = Generator.new
+      generator = Generator.new(control_seed)
 
       control_namespace = Controls::Namespace.example
-      generator.namespace = control_namespace
+      iterator = Iterator.build(control_seed, control_namespace)
+      iterator.next
 
-      generator.iterator.next
-      refute(generator.reset?)
+      generator.iterator = iterator
 
       generator.reset
 
@@ -17,8 +19,8 @@ context "Generator" do
         assert(generator.reset?)
       end
 
-      context "Generator's Namespace" do
-        namespace = generator.namespace
+      context "Iterator's Namespace" do
+        namespace = iterator.namespace
 
         test "Unchanged" do
           assert(namespace == control_namespace)
@@ -29,10 +31,13 @@ context "Generator" do
     context "Optional Namespace Given" do
       namespace = Controls::Namespace.example
 
-      generator = Generator.new
+      generator = Generator.new(control_seed)
 
-      generator.iterator.next
-      refute(generator.reset?)
+      control_namespace = Controls::Namespace.example
+      iterator = Iterator.build(control_seed, control_namespace)
+      iterator.next
+
+      generator.iterator = iterator
 
       generator.reset(namespace)
 

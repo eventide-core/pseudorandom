@@ -14,9 +14,7 @@ module Pseudorandom
       @random = random
     end
 
-    def self.build(seed=nil, namespace: nil)
-      seed ||= Defaults.seed
-
+    def self.build(seed, namespace=nil)
       random = self.random(seed, namespace)
 
       instance = new(random)

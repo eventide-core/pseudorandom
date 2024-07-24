@@ -2,13 +2,15 @@ require_relative '../automated_init'
 
 context "Iterator" do
   context "Seed Predicate" do
-    seed = Controls::Seed.example
+    control_seed = Controls::Seed.example
 
     context "Given Seed Corresponds With Iterator's Seed" do
-      context "Iterator Has a Namespace" do
-        namespace = Controls::Namespace.example
+      seed = control_seed
 
-        iterator = Iterator.build(seed, namespace:)
+      context "Iterator Has a Namespace" do
+        control_namespace = Controls::Namespace.example
+
+        iterator = Iterator.build(control_seed, control_namespace)
 
         is_seed = iterator.seed?(seed)
 
@@ -18,7 +20,7 @@ context "Iterator" do
       end
 
       context "Iterator Doesn't Have a Namespace" do
-        iterator = Iterator.build(seed)
+        iterator = Iterator.build(control_seed)
 
         is_seed = iterator.seed?(seed)
 
@@ -29,11 +31,11 @@ context "Iterator" do
     end
 
     context "Given Seed Doesn't Correspond With Iterator's Seed" do
-      other_seed = Controls::Seed.other_example
+      seed = Controls::Seed.other_example
 
-      iterator = Iterator.build(seed)
+      iterator = Iterator.build(control_seed)
 
-      is_seed = iterator.seed?(other_seed)
+      is_seed = iterator.seed?(seed)
 
       test do
         refute(is_seed)
